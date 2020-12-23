@@ -31,141 +31,141 @@ var SyncPlay = function (initobj, onconnected, videonode) {
   var stateChanged = false;
 
   function init(initobj, onconnected, vnode) {
-      url = initobj.url;
-      room = initobj.room;
-      node = vnode;
-      username = initobj.name;
-      conn_callback = onconnected;
-      if (initobj.hasOwnProperty("password")) {
-          password = initobj.password;
-      }
+    url = initobj.url;
+    room = initobj.room;
+    node = vnode;
+    username = initobj.name;
+    conn_callback = onconnected;
+    if (initobj.hasOwnProperty("password")) {
+      password = initobj.password;
+    }
   }
   init(initobj, onconnected, videonode);
 
   function establishWS(conncallback) {
-      socket = new Websock();
-      socket.open("ws://" + url);
-      socket.on("open", p => {
-          sendHello();
-      });
-      socket.on("message", socketHandler);
+    socket = new Websock();
+    socket.open("ws://" + url);
+    socket.on("open", p => {
+      sendHello();
+    });
+    socket.on("message", socketHandler);
   }
 
   function sendState(position, paused, doSeek, latencyCalculation, stateChange) {
-      var state = {};
-      if (typeof(stateChange) == "undefined") {
-          return false;
+    var state = {};
+    if (typeof (stateChange) == "undefined") {
+      return false;
+    }
+    var positionAndPausedIsSet = ((position != null) && (paused != null));
+    var clientIgnoreIsNotSet = (clientIgnoringOnTheFly == 0 || serverIgnoringOnTheFly != 0);
+    if (clientIgnoreIsNotSet && positionAndPausedIsSet) {
+      state["playstate"] = {};
+      state["playstate"]["position"] = position(videoobj);
+      state["playstate"]["paused"] = paused(videoobj);
+      if (doSeek) {
+        state["playstate"]["doSeek"] = doSeek;
+        seek = false;
       }
-      var positionAndPausedIsSet = ((position != null) && (paused != null));
-      var clientIgnoreIsNotSet = (clientIgnoringOnTheFly == 0 || serverIgnoringOnTheFly != 0);
-      if (clientIgnoreIsNotSet && positionAndPausedIsSet) {
-          state["playstate"] = {};
-          state["playstate"]["position"] = position(videoobj);
-          state["playstate"]["paused"] = paused(videoobj);
-          if (doSeek) {
-              state["playstate"]["doSeek"] = doSeek;
-              seek = false;
-          }
+    }
+    state["ping"] = {}
+    if (latencyCalculation != null) {
+      state["ping"]["latencyCalculation"] = latencyCalculation;
+    }
+    state["ping"]["clientLatencyCalculation"] = (new Date).getTime() / 1000;
+    state["ping"]["clientRtt"] = clientRtt;
+    if (stateChange) {
+      clientIgnoringOnTheFly += 1;
+    }
+    if (serverIgnoringOnTheFly || clientIgnoringOnTheFly) {
+      state["ignoringOnTheFly"] = {};
+      if (serverIgnoringOnTheFly) {
+        state["ignoringOnTheFly"]["server"] = serverIgnoringOnTheFly;
+        serverIgnoringOnTheFly = 0;
       }
-      state["ping"] = {}
-      if (latencyCalculation != null) {
-          state["ping"]["latencyCalculation"] = latencyCalculation;
+      if (clientIgnoringOnTheFly) {
+        state["ignoringOnTheFly"]["client"] = clientIgnoringOnTheFly;
       }
-      state["ping"]["clientLatencyCalculation"] = (new Date).getTime() / 1000;
-      state["ping"]["clientRtt"] = clientRtt;
-      if (stateChange) {
-          clientIgnoringOnTheFly += 1;
-      }
-      if (serverIgnoringOnTheFly || clientIgnoringOnTheFly) {
-          state["ignoringOnTheFly"] = {};
-          if (serverIgnoringOnTheFly) {
-              state["ignoringOnTheFly"]["server"] = serverIgnoringOnTheFly;
-              serverIgnoringOnTheFly = 0;
-          }
-          if (clientIgnoringOnTheFly) {
-              state["ignoringOnTheFly"]["client"] = clientIgnoringOnTheFly;
-          }
-      }
-      send({"State": state});
+    }
+    send({ "State": state });
   }
 
   function socketHandler() {
-      var large_payload: string = socket.rQshiftStr();
-      var split_payload = large_payload.split("\r\n");
-      for (var index = 0; index < split_payload.length; index += 1) {
-          if (split_payload[index] == "") {
-              break;
-          }
-          var payload = JSON.parse(split_payload[index]);
-          console.log("Server << " + JSON.stringify(payload));
-          if (payload.hasOwnProperty("Hello")) {
-              motd = payload.Hello.motd;
-              sendRoomEvent("joined");
-              conn_callback({
-                  connected: true,
-                  motd: motd
-              });
-          }
-          if (payload.hasOwnProperty("Error")) {
-              throw payload.Error;
-          }
-          if (payload.hasOwnProperty("Set")) {
-              if (payload.Set.hasOwnProperty("user")) {
-                  for (var i in payload.Set.user) {
-                      if (payload.Set.user[i].hasOwnProperty("event")) {
-                          var sevent = new CustomEvent("userlist", {
-                              detail: {
-                                  user: Object.keys(payload.Set.user)[0],
-                                  evt: Object.keys(payload.Set.user[i]["event"])[0]
-                              },
-                              bubbles: true,
-                              cancelable: true
-                          });
-                          node.dispatchEvent(sevent);
-                      }
-                      if (payload.Set.user[i].hasOwnProperty("file")) {
-                          if (Object.keys(payload.Set.user)[0] != username) {
-                              var sevent = new CustomEvent("fileupdate", {
-                                  detail: payload.Set,
-                                  bubbles: true,
-                                  cancelable: true
-                              });
-                              node.dispatchEvent(sevent);
-                          }
-                      }
-                  }
-              }
-          }
-          if (payload.hasOwnProperty("List")) {
-              var room = Object.keys(payload.List)[0];
-              var sevent = new CustomEvent("listusers", {
-                  detail: payload.List[room],
-                  bubbles: true,
-                  cancelable: true
+    var large_payload: string = socket.rQshiftStr();
+    var split_payload = large_payload.split("\r\n");
+    for (var index = 0; index < split_payload.length; index += 1) {
+      if (split_payload[index] == "") {
+        break;
+      }
+      var payload = JSON.parse(split_payload[index]);
+      console.log("Server << " + JSON.stringify(payload));
+      if (payload.hasOwnProperty("Hello")) {
+        motd = payload.Hello.motd;
+        sendRoomEvent("joined");
+        conn_callback({
+          connected: true,
+          motd: motd
+        });
+      }
+      if (payload.hasOwnProperty("Error")) {
+        throw payload.Error;
+      }
+      if (payload.hasOwnProperty("Set")) {
+        if (payload.Set.hasOwnProperty("user")) {
+          for (var i in payload.Set.user) {
+            if (payload.Set.user[i].hasOwnProperty("event")) {
+              var sevent = new CustomEvent("userlist", {
+                detail: {
+                  user: Object.keys(payload.Set.user)[0],
+                  evt: Object.keys(payload.Set.user[i]["event"])[0]
+                },
+                bubbles: true,
+                cancelable: true
               });
               node.dispatchEvent(sevent);
+            }
+            if (payload.Set.user[i].hasOwnProperty("file")) {
+              if (Object.keys(payload.Set.user)[0] != username) {
+                var sevent = new CustomEvent("fileupdate", {
+                  detail: payload.Set,
+                  bubbles: true,
+                  cancelable: true
+                });
+                node.dispatchEvent(sevent);
+              }
+            }
           }
-          if (payload.hasOwnProperty("State")) {
-              clientRtt = payload.State.ping.yourLatency;
-              latencyCalculation = payload.State.ping.latencyCalculation;
+        }
+      }
+      if (payload.hasOwnProperty("List")) {
+        var room = Object.keys(payload.List)[0];
+        var sevent = new CustomEvent("listusers", {
+          detail: payload.List[room],
+          bubbles: true,
+          cancelable: true
+        });
+        node.dispatchEvent(sevent);
+      }
+      if (payload.hasOwnProperty("State")) {
+        clientRtt = payload.State.ping.yourLatency;
+        latencyCalculation = payload.State.ping.latencyCalculation;
 
-              if (payload.State.hasOwnProperty("ignoringOnTheFly")) {
-                  var ignore = payload.State.ignoringOnTheFly;
-                  if (ignore.hasOwnProperty("server")) {
-                      serverIgnoringOnTheFly = ignore["server"];
-                      clientIgnoringOnTheFly = 0;
-                      stateChanged = false;
-                    } else if (ignore.hasOwnProperty("client")) {
-                        if ((ignore["client"]) == clientIgnoringOnTheFly) {
-                            clientIgnoringOnTheFly = 0;
-                            stateChanged = false;
-                        }
-                    }
-                }
+        if (payload.State.hasOwnProperty("ignoringOnTheFly")) {
+          var ignore = payload.State.ignoringOnTheFly;
+          if (ignore.hasOwnProperty("server")) {
+            serverIgnoringOnTheFly = ignore["server"];
+            clientIgnoringOnTheFly = 0;
+            stateChanged = false;
+          } else if (ignore.hasOwnProperty("client")) {
+            if ((ignore["client"]) == clientIgnoringOnTheFly) {
+              clientIgnoringOnTheFly = 0;
+              stateChanged = false;
+            }
+          }
+        }
         if (payload.State.playstate.hasOwnProperty("setBy")
-                ) {
-          if (payload.State.playstate.setBy != null) { 
-            if (payload.State.playstate.setBy != username) { 
+        ) {
+          if (payload.State.playstate.setBy != null) {
+            if (payload.State.playstate.setBy != username) {
               var sevent = new CustomEvent("userevent", {
                 detail: payload.State.playstate,
                 bubbles: true,
@@ -223,12 +223,12 @@ var SyncPlay = function (initobj, onconnected, videonode) {
 
   function sendHello() {
     var payload: {
-     Hello: {
+      Hello: {
         username: string,
         password?: string,
         room: {},
         version: string
-     }
+      }
     } = {
       "Hello": {
         "username": username,
@@ -239,9 +239,9 @@ var SyncPlay = function (initobj, onconnected, videonode) {
       }
     };
     if (password != null) {
-        if (typeof(window.md5) != "undefined") {
-            payload.Hello["password"] = window.md5(password);
-        }
+      if (typeof (window.md5) != "undefined") {
+        payload.Hello["password"] = window.md5(password);
+      }
     }
     send(payload);
     sendList();
