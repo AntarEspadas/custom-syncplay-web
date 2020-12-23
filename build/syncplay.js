@@ -682,6 +682,16 @@ var SyncPlay = function SyncPlay(initobj, onconnected, videonode) {
     send(payload);
   }
 
+  function sendPlaylist(playlist) {
+    var payload = { "Set": { "playlistChange": { "user": "Naratna", "files": playlist } } };
+    send(payload);
+  }
+
+  function sendPlaylistIndex(index) {
+    var payload = { "Set": { "playlistIndex": { "user": username, "index": index } } };
+    send(payload);
+  }
+
   function sendRoomEvent(evt) {
     var user = username;
     var payload = {
@@ -764,7 +774,9 @@ var SyncPlay = function SyncPlay(initobj, onconnected, videonode) {
     },
     playPause: playPause,
     seeked: seeked,
-    getPlaylist: getPlaylist
+    getPlaylist: getPlaylist,
+    sendPlaylistIndex: sendPlaylistIndex,
+    sendPlaylist: sendPlaylist
   };
 };
 

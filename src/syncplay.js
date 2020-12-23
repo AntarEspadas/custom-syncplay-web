@@ -137,9 +137,9 @@ var SyncPlay = function (initobj, onconnected, videonode) {
             }
           }
         }
-        if(payload.Set.hasOwnProperty("playlistIndex")){
-          if (payload.Set.playlistIndex.user != username){
-            let sevent = new CustomEvent("playlistindex",{
+        if (payload.Set.hasOwnProperty("playlistIndex")) {
+          if (payload.Set.playlistIndex.user != username) {
+            let sevent = new CustomEvent("playlistindex", {
               detail: payload.Set.playlistIndex,
               bubbles: true,
               cancelable: true
@@ -147,10 +147,10 @@ var SyncPlay = function (initobj, onconnected, videonode) {
             node.dispatchEvent(sevent);
           }
         }
-        if (payload.Set.hasOwnProperty("playlistChange")){
-          if (payload.Set.playlistChange.user != username){
+        if (payload.Set.hasOwnProperty("playlistChange")) {
+          if (payload.Set.playlistChange.user != username) {
             playlist = payload.Set.playlistChange.files;
-            let sevent = new CustomEvent("playlistchanged",{
+            let sevent = new CustomEvent("playlistchanged", {
               detail: payload.Set.playlistChange,
               bubbles: true,
               cancelable: true
@@ -227,6 +227,16 @@ var SyncPlay = function (initobj, onconnected, videonode) {
     send(payload);
   }
 
+  function sendPlaylist(playlist) {
+    let payload = { "Set": { "playlistChange": { "user": "Naratna", "files": playlist } } };
+    send(payload);
+  }
+
+  function sendPlaylistIndex(index) {
+    let payload = { "Set": { "playlistIndex": { "user": username, "index": index } } };
+    send(payload);
+  }
+
   function sendRoomEvent(evt) {
     var user = username;
     var payload = {
@@ -291,7 +301,7 @@ var SyncPlay = function (initobj, onconnected, videonode) {
   }
 
   function seeked() {
-    if (videoobj.initialized){
+    if (videoobj.initialized) {
       seek = true;
       stateChanged = true;
     }
@@ -317,7 +327,9 @@ var SyncPlay = function (initobj, onconnected, videonode) {
     },
     playPause: playPause,
     seeked: seeked,
-    getPlaylist: getPlaylist
+    getPlaylist: getPlaylist,
+    sendPlaylistIndex: sendPlaylistIndex,
+    sendPlaylist: sendPlaylist
   }
 };
 
