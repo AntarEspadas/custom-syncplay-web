@@ -64,13 +64,6 @@ $(vid_player).on("userlist", function (e) {
 
 window.seekFromEvent = false;
 
-$(vid_player).on("seeked", function (e) {
-    if (!window.seekFromEvent) {
-        syncplayjs.seeked();
-    }
-    window.seekFromEvent = false;
-});
-
 $(vid_player).on("fileupdate", function (e) {
     var username = Object.keys(e.detail.user);
     var duration = e.detail.user[username].file.duration; // seconds
@@ -101,6 +94,13 @@ $(vid_player).on("userevent", function (e) {
         vid_player.currentTime = e.detail.position;
         toastr.warning(message);
     }
+});
+
+$(vid_player).on("seeked", function (e) {
+    if (!window.seekFromEvent) {
+        syncplayjs.seeked();
+    }
+    window.seekFromEvent = false;
 });
 
 $(vid_player).on("play", function (e) {
