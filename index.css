@@ -1,0 +1,48 @@
+body {
+    background: black;
+}
+
+#node {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+#fpicker {
+    display: none;
+}
+
+#fpicker-div {
+    background: grey;
+    width: 98%;
+    height: 96%;
+    position: fixed;
+    color: wheat;
+    text-align: center;
+    cursor: pointer;
+    border: 15px dashed wheat;
+    margin: -10px;
+}
+
+#fpicker-div>label {
+    position: absolute;
+    text-align: center;
+    font-size: 4em;
+    width: 100%;
+    top: 40%;
+    display: block;
+    cursor: pointer;
+}
+
+#float {
+    position: fixed;
+    margin: 10px;
+    display: none;
+}
+
+.file {
+    font-size: smaller;
+    margin-top: 4px;
+    opacity: 0.6;
+}
