@@ -486,6 +486,8 @@ var SyncPlay = function SyncPlay(initobj, onconnected, videonode) {
 
   var stateChanged = false;
 
+  var playlist = [];
+
   function init(initobj, onconnected, vnode) {
     url = initobj.url;
     room = initobj.room;
@@ -598,8 +600,18 @@ var SyncPlay = function SyncPlay(initobj, onconnected, videonode) {
               bubbles: true,
               cancelable: true
             });
-            _sevent.testValue = true;
             node.dispatchEvent(_sevent);
+          }
+        }
+        if (payload.Set.hasOwnProperty("playlistChange")) {
+          if (payload.Set.playlistChange.user != username) {
+            playlist = payload.Set.playlistChange.files;
+            var _sevent2 = new CustomEvent("playlistchanged", {
+              detail: payload.Set.playlistChange,
+              bubbles: true,
+              cancelable: true
+            });
+            node.dispatchEvent(_sevent2);
           }
         }
       }
@@ -732,6 +744,10 @@ var SyncPlay = function SyncPlay(initobj, onconnected, videonode) {
     }
   }
 
+  function getPlaylist() {
+    return playlist;
+  }
+
   return {
     connect: function connect() {
       establishWS(onconnected);
@@ -747,7 +763,8 @@ var SyncPlay = function SyncPlay(initobj, onconnected, videonode) {
       sendRoomEvent("left");
     },
     playPause: playPause,
-    seeked: seeked
+    seeked: seeked,
+    getPlaylist: getPlaylist
   };
 };
 
