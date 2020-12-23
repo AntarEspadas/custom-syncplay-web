@@ -122,6 +122,12 @@ $(vid_player).on("userevent", function (e) {
     }
 });
 
+vid_player.addEventListener("playlistindex", function(e){
+    let username = e.detail.user;
+    let message = `'${username}' changed playlist video`;
+    toastr.info(message);
+});
+
 $(vid_player).on("seeked", function (e) {
     if (!window.seekFromEvent) {
         syncplayjs.seeked();
