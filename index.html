@@ -9,10 +9,17 @@
   <link rel="stylesheet" href="index.css">
 </head>
 <body>
-<input id="fpicker" type="file" accept="video/*,audio/*" />
+<!-- <input id="fpicker" type="file" accept="video/*,audio/*" />
 <div id="fpicker-div" onclick="pick();"><label>Click here to pick a file</label></div>
-<button id="float">_</button>
-<video id="node" controls="true" style="display: none;"></video>
+<button id="float">_</button> -->
+<div id="main-container">
+  <div id="username-prompt">
+    <p>Pick a username:</p>
+    <input type="text" name="username" id="username-input" placeholder="Username">
+    <button>Ok</button>
+  </div>
+  <video id="node" controls="true" style="display: none;"></video>
+</div>
 <script src="index.js"></script>
 </body>
 </html>

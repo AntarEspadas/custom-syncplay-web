@@ -2,19 +2,40 @@ function pick() {
     $("#fpicker").click();
 }
 var vid_player = $("#node")[0];
-
-var username = null;
-while (username == null) {
-    username = prompt("Pick a name", "Guest_" + Math.ceil(Math.random() * 1000));
-}
-document.title = username;
-
-$("#fpicker").change(function (e) {
-    $("#node").attr("src", window.URL.createObjectURL($("#fpicker")[0].files[0]));
-    window.filename = $("#fpicker")[0].files[0].name;
-    window.filesize = $("#fpicker")[0].files[0].size;
-});
 vid_player.volume = 0.3;
+
+// var username = null;
+// while (username == null) {
+//     username = prompt("Pick a name", "Guest_" + Math.ceil(Math.random() * 1000));
+// }
+
+// $("#fpicker").change(function (e) {
+//     $("#node").attr("src", window.URL.createObjectURL($("#fpicker")[0].files[0]));
+//     window.filename = $("#fpicker")[0].files[0].name;
+//     window.filesize = $("#fpicker")[0].files[0].size;
+// });
+let username = null;
+let usernameInput = document.getElementById("username-input")
+let okButton = document.getElementById("username-prompt").getElementsByTagName("button")[0]
+usernameInput.value = "Guest_" + Math.ceil(Math.random() * 1000);
+
+function start() {
+    if (usernameInput.value == "")
+        return;
+    username = usernameInput.value;
+    document.getElementById("main-container").removeChild(document.getElementById("username-prompt"));
+    vid_player.style.display = "block";
+    vid_player.src = "http://futaba.pls-step-on.me/media/pop-on-rocks-1h.mp4";
+    document.title = username;
+}
+
+okButton.addEventListener("click", start);
+usernameInput.addEventListener("keyup", function(e) {
+    if(e.key == "Enter"){
+        start()
+    }
+})
+
 $(vid_player).on("loadeddata", function (e) {
     $("#fpicker-div").hide();
     $("#node").show();
@@ -29,7 +50,7 @@ $(vid_player).on("loadeddata", function (e) {
     window.syncplayjs = new SyncPlay({
         name: username,
         room: document.location.hash || "test",
-        url: "127.0.0.1:9000"
+        url: "futaba.pls-step-on.me:9000"
     }, onconnect, vid_player);
     var getterFn = {
         is_paused: function (vid_player) {
