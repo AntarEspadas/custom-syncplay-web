@@ -460,7 +460,7 @@ var _websock2 = _interopRequireDefault(_websock);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var SyncPlay = function SyncPlay(initobj, onconnected, videonode) {
-  var version = "1.3.4";
+  var version = "1.6.7";
   var username;
   var room;
   var password = null;
@@ -487,6 +487,7 @@ var SyncPlay = function SyncPlay(initobj, onconnected, videonode) {
   var stateChanged = false;
 
   var playlist = [];
+  var playlistIndex = void 0;
 
   function init(initobj, onconnected, vnode) {
     url = initobj.url;
@@ -594,14 +595,13 @@ var SyncPlay = function SyncPlay(initobj, onconnected, videonode) {
           }
         }
         if (payload.Set.hasOwnProperty("playlistIndex")) {
-          if (payload.Set.playlistIndex.user != username) {
-            var _sevent = new CustomEvent("playlistindex", {
-              detail: payload.Set.playlistIndex,
-              bubbles: true,
-              cancelable: true
-            });
-            node.dispatchEvent(_sevent);
-          }
+          playlistIndex = payload.Set.playlistIndex.index;
+          var _sevent = new CustomEvent("playlistindex", {
+            detail: payload.Set.playlistIndex,
+            bubbles: true,
+            cancelable: true
+          });
+          node.dispatchEvent(_sevent);
         }
         if (payload.Set.hasOwnProperty("playlistChange")) {
           if (payload.Set.playlistChange.user != username) {
@@ -683,7 +683,7 @@ var SyncPlay = function SyncPlay(initobj, onconnected, videonode) {
   }
 
   function sendPlaylist(playlist) {
-    var payload = { "Set": { "playlistChange": { "user": "Naratna", "files": playlist } } };
+    var payload = { "Set": { "playlistChange": { "user": username, "files": playlist } } };
     send(payload);
   }
 
@@ -758,6 +758,10 @@ var SyncPlay = function SyncPlay(initobj, onconnected, videonode) {
     return playlist;
   }
 
+  function getPlaylistIndex() {
+    return playlistIndex;
+  }
+
   return {
     connect: function connect() {
       establishWS(onconnected);
@@ -774,6 +778,7 @@ var SyncPlay = function SyncPlay(initobj, onconnected, videonode) {
     },
     playPause: playPause,
     seeked: seeked,
+    getPlaylistIndex: getPlaylistIndex,
     getPlaylist: getPlaylist,
     sendPlaylistIndex: sendPlaylistIndex,
     sendPlaylist: sendPlaylist

@@ -1,6 +1,7 @@
 const server = "futaba.pls-step-on.me:9000";
 const room = "master"
 const video = "http://futaba.pls-step-on.me/media/pop-on-rocks-1h.mp4";
+const testPlaylist = ["http://futaba.pls-step-on.me/media/Gura%20doesn't%20know%20I%20exist-RXoHkAfrxzA.mp4", "http://futaba.pls-step-on.me/media/pop-on-rocks-1h.mp4"];
 
 // function pick() {
 //     $("#fpicker").click();
@@ -22,6 +23,8 @@ vid_player.initialized = false;
 let username = null;
 let usernameInput = document.getElementById("username-input")
 let okButton = document.getElementById("username-prompt").getElementsByTagName("button")[0]
+let playlist = null;
+let playlistIndex;
 usernameInput.value = "Guest_" + Math.ceil(Math.random() * 1000);
 
 function start() {
@@ -36,7 +39,6 @@ function start() {
         if (e.connected) {
             toastr.success("Connected!");
             // syncplayjs.set_file(filename, vid_player.duration, filesize);
-            vid_player.src = video;
         }
     }
 
@@ -123,14 +125,29 @@ $(vid_player).on("userevent", function (e) {
 });
 
 vid_player.addEventListener("playlistindex", function(e){
+    playlistIndex = e.detail.index;
+    if (playlist[playlistIndex] == vid_player.src){
+        return;
+    }
     let username = e.detail.user;
     let message = `'${username}' changed playlist video`;
+    if (typeof(playlistIndex) != "number" || !(0 <= playlistIndex && playlistIndex < playlist.length)){
+        playlistIndex = 0;
+        window.syncplayjs.sendPlaylistIndex(playlistIndex);
+    }
+    vid_player.initialized = false;
+    vid_player.src = playlist[playlistIndex];
     toastr.info(message);
 });
 
 vid_player.addEventListener("playlistchanged", function(e){
     let username = e.detail.user;
-    let message = `'${username}' changed playlist content`;
+    playlist = e.detail.files;
+    let message = `'${username}' updated the playlist content`;
+    if (!playlist.length){
+        playlist = testPlaylist;
+        window.syncplayjs.sendPlaylist(playlist);
+    }
     toastr.info(message);
 });
 

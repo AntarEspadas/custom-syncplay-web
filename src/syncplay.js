@@ -4,7 +4,7 @@
 import Websock from './websock';
 
 var SyncPlay = function (initobj, onconnected, videonode) {
-  var version = "1.3.4";
+  var version = "1.6.7";
   var username: string;
   var room: string;
   var password = null;
@@ -31,6 +31,7 @@ var SyncPlay = function (initobj, onconnected, videonode) {
   var stateChanged = false;
 
   let playlist = []
+  let playlistIndex;
 
   function init(initobj, onconnected, vnode) {
     url = initobj.url;
@@ -138,14 +139,13 @@ var SyncPlay = function (initobj, onconnected, videonode) {
           }
         }
         if (payload.Set.hasOwnProperty("playlistIndex")) {
-          if (payload.Set.playlistIndex.user != username) {
-            let sevent = new CustomEvent("playlistindex", {
-              detail: payload.Set.playlistIndex,
-              bubbles: true,
-              cancelable: true
-            });
-            node.dispatchEvent(sevent);
-          }
+          playlistIndex = payload.Set.playlistIndex.index;
+          let sevent = new CustomEvent("playlistindex", {
+            detail: payload.Set.playlistIndex,
+            bubbles: true,
+            cancelable: true
+          });
+          node.dispatchEvent(sevent);
         }
         if (payload.Set.hasOwnProperty("playlistChange")) {
           if (payload.Set.playlistChange.user != username) {
@@ -228,7 +228,7 @@ var SyncPlay = function (initobj, onconnected, videonode) {
   }
 
   function sendPlaylist(playlist) {
-    let payload = { "Set": { "playlistChange": { "user": "Naratna", "files": playlist } } };
+    let payload = { "Set": { "playlistChange": { "user": username, "files": playlist } } };
     send(payload);
   }
 
@@ -311,6 +311,10 @@ var SyncPlay = function (initobj, onconnected, videonode) {
     return playlist;
   }
 
+  function getPlaylistIndex(){
+    return playlistIndex;
+  }
+
   return {
     connect: function () {
       establishWS(onconnected);
@@ -327,6 +331,7 @@ var SyncPlay = function (initobj, onconnected, videonode) {
     },
     playPause: playPause,
     seeked: seeked,
+    getPlaylistIndex: getPlaylistIndex,
     getPlaylist: getPlaylist,
     sendPlaylistIndex: sendPlaylistIndex,
     sendPlaylist: sendPlaylist
