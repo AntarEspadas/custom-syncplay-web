@@ -1,3 +1,7 @@
+const server = "futaba.pls-step-on.me:9000";
+const room = "master"
+const video = "http://futaba.pls-step-on.me/media/pop-on-rocks-1h.mp4";
+
 function pick() {
     $("#fpicker").click();
 }
@@ -25,7 +29,7 @@ function start() {
     username = usernameInput.value;
     document.getElementById("main-container").removeChild(document.getElementById("username-prompt"));
     vid_player.style.display = "block";
-    vid_player.src = "http://futaba.pls-step-on.me/media/pop-on-rocks-1h.mp4";
+    vid_player.src = video;
     document.title = username;
 }
 
@@ -49,8 +53,8 @@ $(vid_player).on("loadeddata", function (e) {
 
     window.syncplayjs = new SyncPlay({
         name: username,
-        room: document.location.hash || "test",
-        url: "futaba.pls-step-on.me:9000"
+        room: room,
+        url: server
     }, onconnect, vid_player);
     var getterFn = {
         is_paused: function (vid_player) {
