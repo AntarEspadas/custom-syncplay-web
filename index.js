@@ -2,9 +2,9 @@ const server = "futaba.pls-step-on.me:9000";
 const room = "master"
 const video = "http://futaba.pls-step-on.me/media/pop-on-rocks-1h.mp4";
 
-function pick() {
-    $("#fpicker").click();
-}
+// function pick() {
+//     $("#fpicker").click();
+// }
 var vid_player = $("#node")[0];
 vid_player.volume = 0.3;
 
