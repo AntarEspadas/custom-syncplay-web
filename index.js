@@ -7,6 +7,7 @@ const video = "http://futaba.pls-step-on.me/media/pop-on-rocks-1h.mp4";
 // }
 var vid_player = $("#node")[0];
 vid_player.volume = 0.3;
+vid_player.initialized = false;
 
 // var username = null;
 // while (username == null) {
@@ -29,25 +30,13 @@ function start() {
     username = usernameInput.value;
     document.getElementById("main-container").removeChild(document.getElementById("username-prompt"));
     vid_player.style.display = "block";
-    vid_player.src = video;
     document.title = username;
-}
-
-okButton.addEventListener("click", start);
-usernameInput.addEventListener("keyup", function(e) {
-    if(e.key == "Enter"){
-        start()
-    }
-})
-
-$(vid_player).on("loadeddata", function (e) {
-    $("#fpicker-div").hide();
-    $("#node").show();
 
     function onconnect(e) {
         if (e.connected) {
             toastr.success("Connected!");
-            syncplayjs.set_file(filename, vid_player.duration, filesize);
+            // syncplayjs.set_file(filename, vid_player.duration, filesize);
+            vid_player.src = video;
         }
     }
 
@@ -66,6 +55,18 @@ $(vid_player).on("loadeddata", function (e) {
     };
     syncplayjs.setStateGetters(getterFn, vid_player);
     syncplayjs.connect();
+}
+
+okButton.addEventListener("click", start);
+usernameInput.addEventListener("keyup", function(e) {
+    if(e.key == "Enter"){
+        start()
+    }
+})
+
+$(vid_player).on("loadeddata", function (e) {
+    console.log("loadeddata")
+    vid_player.initialized = true;
 });
 
 $(vid_player).on("listusers", function (e) {

@@ -58,7 +58,7 @@ var SyncPlay = function (initobj, onconnected, videonode) {
     }
     var positionAndPausedIsSet = ((position != null) && (paused != null));
     var clientIgnoreIsNotSet = (clientIgnoringOnTheFly == 0 || serverIgnoringOnTheFly != 0);
-    if (clientIgnoreIsNotSet && positionAndPausedIsSet) {
+    if (clientIgnoreIsNotSet && positionAndPausedIsSet && videoobj.initialized) {
       state["playstate"] = {};
       state["playstate"]["position"] = position(videoobj);
       state["playstate"]["paused"] = paused(videoobj);
@@ -148,6 +148,7 @@ var SyncPlay = function (initobj, onconnected, videonode) {
       if (payload.hasOwnProperty("State")) {
         clientRtt = payload.State.ping.yourLatency;
         latencyCalculation = payload.State.ping.latencyCalculation;
+        window.position = payload.State.playstate.position;
 
         if (payload.State.hasOwnProperty("ignoringOnTheFly")) {
           var ignore = payload.State.ignoringOnTheFly;
@@ -262,12 +263,15 @@ var SyncPlay = function (initobj, onconnected, videonode) {
   }
 
   function playPause() {
-    stateChanged = true;
+    if (videoobj.initialized)
+      stateChanged = true;
   }
 
   function seeked() {
-    seek = true;
-    stateChanged = true;
+    if (videoobj.initialized){
+      seek = true;
+      stateChanged = true;
+    }
   }
 
   return {
