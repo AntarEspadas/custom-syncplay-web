@@ -128,6 +128,12 @@ vid_player.addEventListener("playlistindex", function(e){
     toastr.info(message);
 });
 
+vid_player.addEventListener("playlistchanged", function(e){
+    let username = e.detail.user;
+    let message = `'${username}' changed playlist content`;
+    toastr.info(message);
+});
+
 $(vid_player).on("seeked", function (e) {
     if (!window.seekFromEvent) {
         syncplayjs.seeked();
