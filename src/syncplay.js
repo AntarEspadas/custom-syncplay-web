@@ -135,6 +135,17 @@ var SyncPlay = function (initobj, onconnected, videonode) {
             }
           }
         }
+        if(payload.Set.hasOwnProperty("playlistIndex")){
+          if (payload.Set.playlistIndex.user != username){
+            let sevent = new CustomEvent("playlistindex",{
+              detail: payload.Set.playlistIndex,
+              bubbles: true,
+              cancelable: true
+            });
+            sevent.testValue = true;
+            node.dispatchEvent(sevent);
+          }
+        }
       }
       if (payload.hasOwnProperty("List")) {
         var room = Object.keys(payload.List)[0];
