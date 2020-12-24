@@ -33,13 +33,11 @@ function start() {
     username = usernameInput.value;
     document.getElementById("main-container").removeChild(document.getElementById("username-prompt"));
     vid_player.style.display = "block";
-    document.title = username;
 
     function onconnect(e) {
         if (e.connected) {
             toastr.success("Connected!");
             username = e.username;
-            // syncplayjs.set_file(filename, vid_player.duration, filesize);
         }
     }
 
@@ -70,6 +68,11 @@ usernameInput.addEventListener("keyup", function(e) {
 $(vid_player).on("loadeddata", function (e) {
     console.log("loadeddata")
     vid_player.initialized = true;
+    let filename = vid_player.src.split("/").pop();
+    filename = filename.substring(0, filename.lastIndexOf("."));
+    filename = decodeURI(filename);
+    syncplayjs.set_file(filename, vid_player.duration, 0);
+    document.title = filename;
 });
 
 $(vid_player).on("listusers", function (e) {
@@ -79,9 +82,9 @@ $(vid_player).on("listusers", function (e) {
         if (user == username) {
             continue;
         }
-        var filename = e.detail[user].file.name;
-        var filesize = e.detail[user].file.size; // bytes
-        var file_duration = e.detail[user].file.duration; // seconds
+        // var filename = e.detail[user].file.name;
+        // var filesize = e.detail[user].file.size; // bytes
+        // var file_duration = e.detail[user].file.duration; // seconds
     }
 });
 
