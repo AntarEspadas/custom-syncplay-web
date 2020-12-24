@@ -1,6 +1,6 @@
-const server = "futaba.pls-step-on.me:9000";
-const room = "master"
-const video = "http://futaba.pls-step-on.me/media/pop-on-rocks-1h.mp4";
+const params = new URLSearchParams(window.location.search);
+const server = params.get("server") || "futaba.pls-step-on.me:9000";
+const room = params.get("room") || "master";
 const testPlaylist = ["http://futaba.pls-step-on.me/media/Gura%20doesn't%20know%20I%20exist-RXoHkAfrxzA.mp4", "http://futaba.pls-step-on.me/media/pop-on-rocks-1h.mp4"];
 
 // function pick() {
