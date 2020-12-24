@@ -70,9 +70,8 @@ usernameInput.addEventListener("keyup", function(e) {
 $(vid_player).on("loadeddata", function (e) {
     console.log("loadeddata")
     vid_player.initialized = true;
-    let filename = getFilename(vid_player.src);
-    syncplayjs.set_file(filename, vid_player.duration, 0);
-    document.title = filename;
+    syncplayjs.set_file(vid_player.src, vid_player.duration, 0);
+    document.title = getFilename(vid_player.src);
 });
 
 $(vid_player).on("listusers", function (e) {
