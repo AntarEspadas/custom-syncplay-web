@@ -141,6 +141,11 @@ vid_player.addEventListener("playlistindex", function(e){
     }
     vid_player.initialized = false;
     vid_player.src = playlist[playlistIndex];
+    let selectedElement = document.getElementById("selected-entry");
+    if (selectedElement != undefined)
+        selectedElement.id = undefined;
+    let playlistElements = document.getElementsByClassName("playlist-entry");
+    playlistElements[playlistIndex].id = "selected-entry";
     toastr.info(message);
 });
 
