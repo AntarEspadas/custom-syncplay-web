@@ -70,9 +70,7 @@ usernameInput.addEventListener("keyup", function(e) {
 $(vid_player).on("loadeddata", function (e) {
     console.log("loadeddata")
     vid_player.initialized = true;
-    let filename = vid_player.src.split("/").pop();
-    filename = filename.substring(0, filename.lastIndexOf("."));
-    filename = decodeURI(filename);
+    let filename = getFilename(vid_player.src);
     syncplayjs.set_file(filename, vid_player.duration, 0);
     document.title = filename;
 });
