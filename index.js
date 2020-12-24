@@ -165,6 +165,7 @@ vid_player.addEventListener("playlistchanged", function(e){
         playlistElement.className = "playlist-entry";
         playlistElement.playlistIndex = i;
         playlistElement.innerHTML = `<p>${getFilename(playlist[i])}</p>`;
+        playlistElement.addEventListener("click", playlistEntryClicked);
         sidebar.appendChild(playlistElement);
     }
     toastr.info(message);
@@ -217,4 +218,12 @@ function getFilename(url){
     let filename = url.split("/").pop();
     filename = filename.substring(0, filename.lastIndexOf("."));
     return decodeURI(filename);
+}
+
+function playlistEntryClicked(e){
+    let source = e.srcElement;
+    if (source.tagName != "DIV"){
+        source = source.parentElement;
+    }
+    console.log(source.playlistIndex);
 }
