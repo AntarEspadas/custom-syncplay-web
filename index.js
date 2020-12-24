@@ -25,6 +25,7 @@ let usernameInput = document.getElementById("username-input")
 let okButton = document.getElementById("username-prompt").getElementsByTagName("button")[0]
 let playlist = null;
 let playlistIndex;
+let sidebar = document.getElementById("sidebar");
 usernameInput.value = "Guest_" + Math.ceil(Math.random() * 1000);
 
 function start() {
@@ -33,6 +34,7 @@ function start() {
     username = usernameInput.value;
     document.getElementById("main-container").removeChild(document.getElementById("username-prompt"));
     vid_player.style.display = "block";
+    sidebar.style.display = "block";
 
     function onconnect(e) {
         if (e.connected) {

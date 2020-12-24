@@ -80,3 +80,13 @@ body{
     background: #EFEFEF;
     margin: 0;
 }
+
+#sidebar{
+    position: absolute;
+    width: 17%;
+    height: 100vh;
+    right: 0;
+    background: white;
+    -webkit-box-shadow: inset 12px 12px 15px -11px #000000; 
+    box-shadow: inset 12px 12px 15px -11px #000000;
+}
