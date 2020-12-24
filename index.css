@@ -87,6 +87,41 @@ body{
     height: 100vh;
     right: 0;
     background: white;
-    -webkit-box-shadow: inset 12px 12px 15px -11px #000000; 
-    box-shadow: inset 12px 12px 15px -11px #000000;
+    -webkit-box-shadow: 11px 0px 15px 0px #000000; 
+    box-shadow: 11px 0px 15px 0px #000000;
+    margin: 0;
+    padding: 0;
+}
+
+.playlist-entry{
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+    min-height: 50px;
+    padding-left: 5px;
+    padding-right: 5px;
+    background-color: rgb(241, 241, 241);
+    border-radius: 4px;
+
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    text-align: center;
+
+    transition: 350ms;
+}
+
+.playlist-entry:hover{
+    background: lightgray;
+    transition: 500ms;
+    cursor: pointer;
+    transform: translateY(100);
+}
+
+#selected-entry{
+    background: rgb(167, 167, 167);
+    border-style: solid;
+    border-width: 2px;
+    border-color: #000000;
 }
