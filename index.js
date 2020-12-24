@@ -158,6 +158,7 @@ vid_player.addEventListener("playlistchanged", function(e){
     if (!playlist.length){
         playlist = testPlaylist;
         window.syncplayjs.sendPlaylist(playlist);
+        window.syncplayjs.sendPlaylistIndex(0);
     }
     sidebar.innerHTML = "";
     for (let i = 0; i < playlist.length; i++) {
