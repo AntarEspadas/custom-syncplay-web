@@ -61,8 +61,8 @@ function start() {
 }
 
 okButton.addEventListener("click", start);
-usernameInput.addEventListener("keyup", function(e) {
-    if(e.key == "Enter"){
+usernameInput.addEventListener("keyup", function (e) {
+    if (e.key == "Enter") {
         start()
     }
 })
@@ -127,14 +127,14 @@ $(vid_player).on("userevent", function (e) {
     }
 });
 
-vid_player.addEventListener("playlistindex", function(e){
+vid_player.addEventListener("playlistindex", function (e) {
     playlistIndex = e.detail.index;
-    if (playlist[playlistIndex] == vid_player.src){
+    if (playlist[playlistIndex] == vid_player.src) {
         return;
     }
     let username = e.detail.user;
     let message = `'${username}' changed playlist video`;
-    if (typeof(playlistIndex) != "number" || !(0 <= playlistIndex && playlistIndex < playlist.length)){
+    if (typeof (playlistIndex) != "number" || !(0 <= playlistIndex && playlistIndex < playlist.length)) {
         playlistIndex = 0;
         window.syncplayjs.sendPlaylistIndex(playlistIndex);
     }
@@ -148,13 +148,13 @@ vid_player.addEventListener("playlistindex", function(e){
     toastr.info(message);
 });
 
-vid_player.addEventListener("playlistchanged", function(e){
+vid_player.addEventListener("playlistchanged", function (e) {
     if (arraysEqual(e.detail.files, playlist))
         return;
     let username = e.detail.user;
     playlist = e.detail.files;
     let message = `'${username}' updated the playlist content`;
-    if (!playlist.length){
+    if (!playlist.length) {
         playlist = testPlaylist;
         window.syncplayjs.sendPlaylist(playlist);
         window.syncplayjs.sendPlaylistIndex(0);
@@ -207,22 +207,22 @@ function arraysEqual(a, b) {
     if (a === b) return true;
     if (a == null || b == null) return false;
     if (a.length !== b.length) return false;
-  
+
     for (var i = 0; i < a.length; ++i) {
-      if (a[i] !== b[i]) return false;
+        if (a[i] !== b[i]) return false;
     }
     return true;
-  }
+}
 
-function getFilename(url){
+function getFilename(url) {
     let filename = url.split("/").pop();
     filename = filename.substring(0, filename.lastIndexOf("."));
     return decodeURI(filename);
 }
 
-function playlistEntryClicked(e){
+function playlistEntryClicked(e) {
     let source = e.srcElement;
-    if (source.tagName != "DIV"){
+    if (source.tagName != "DIV") {
         source = source.parentElement;
     }
     syncplayjs.sendPlaylistIndex(source.playlistIndex)

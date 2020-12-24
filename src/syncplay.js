@@ -311,7 +311,7 @@ var SyncPlay = function (initobj, onconnected, videonode) {
     return playlist;
   }
 
-  function getPlaylistIndex(){
+  function getPlaylistIndex() {
     return playlistIndex;
   }
 
