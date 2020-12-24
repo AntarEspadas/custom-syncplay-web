@@ -1,7 +1,10 @@
 const params = new URLSearchParams(window.location.search);
 const server = params.get("server") || "futaba.pls-step-on.me:9000";
 const room = params.get("room") || "master";
-const testPlaylist = ["http://futaba.pls-step-on.me/media/Gura%20doesn't%20know%20I%20exist-RXoHkAfrxzA.mp4", "http://futaba.pls-step-on.me/media/pop-on-rocks-1h.mp4"];
+const specialRooms = {
+    "test" : ["http://futaba.pls-step-on.me/media/Gura%20doesn't%20know%20I%20exist-RXoHkAfrxzA.mp4", "http://futaba.pls-step-on.me/media/pop-on-rocks-1h.mp4"],
+    "bakemonogatari": []
+}
 
 // function pick() {
 //     $("#fpicker").click();
@@ -155,8 +158,8 @@ vid_player.addEventListener("playlistchanged", function (e) {
     let username = e.detail.user;
     playlist = e.detail.files;
     let message = `'${username}' updated the playlist content`;
-    if (!playlist.length) {
-        playlist = testPlaylist;
+    if (!playlist.length && specialRooms.hasOwnProperty(room)) {
+        playlist = specialRooms[room];
         window.syncplayjs.sendPlaylist(playlist);
         window.syncplayjs.sendPlaylistIndex(0);
     }
