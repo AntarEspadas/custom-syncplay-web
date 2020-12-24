@@ -225,5 +225,5 @@ function playlistEntryClicked(e){
     if (source.tagName != "DIV"){
         source = source.parentElement;
     }
-    console.log(source.playlistIndex);
+    syncplayjs.sendPlaylistIndex(source.playlistIndex)
 }
