@@ -38,6 +38,7 @@ function start() {
     function onconnect(e) {
         if (e.connected) {
             toastr.success("Connected!");
+            username = e.username;
             // syncplayjs.set_file(filename, vid_player.duration, filesize);
         }
     }
@@ -141,6 +142,8 @@ vid_player.addEventListener("playlistindex", function(e){
 });
 
 vid_player.addEventListener("playlistchanged", function(e){
+    if (arraysEqual(e.detail.files, playlist))
+        return;
     let username = e.detail.user;
     playlist = e.detail.files;
     let message = `'${username}' updated the playlist content`;
@@ -182,3 +185,14 @@ toastr.options = {
     "showMethod": "fadeIn",
     "hideMethod": "fadeOut"
 }
+
+function arraysEqual(a, b) {
+    if (a === b) return true;
+    if (a == null || b == null) return false;
+    if (a.length !== b.length) return false;
+  
+    for (var i = 0; i < a.length; ++i) {
+      if (a[i] !== b[i]) return false;
+    }
+    return true;
+  }

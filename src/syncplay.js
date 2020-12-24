@@ -103,10 +103,12 @@ var SyncPlay = function (initobj, onconnected, videonode) {
       console.log("Server << " + JSON.stringify(payload));
       if (payload.hasOwnProperty("Hello")) {
         motd = payload.Hello.motd;
+        username = payload.Hello.username;
         sendRoomEvent("joined");
         conn_callback({
           connected: true,
-          motd: motd
+          motd: motd,
+          username: username
         });
       }
       if (payload.hasOwnProperty("Error")) {
@@ -148,15 +150,13 @@ var SyncPlay = function (initobj, onconnected, videonode) {
           node.dispatchEvent(sevent);
         }
         if (payload.Set.hasOwnProperty("playlistChange")) {
-          if (payload.Set.playlistChange.user != username) {
-            playlist = payload.Set.playlistChange.files;
-            let sevent = new CustomEvent("playlistchanged", {
-              detail: payload.Set.playlistChange,
-              bubbles: true,
-              cancelable: true
-            });
-            node.dispatchEvent(sevent);
-          }
+          playlist = payload.Set.playlistChange.files;
+          let sevent = new CustomEvent("playlistchanged", {
+            detail: payload.Set.playlistChange,
+            bubbles: true,
+            cancelable: true
+          });
+          node.dispatchEvent(sevent);
         }
       }
       if (payload.hasOwnProperty("List")) {
