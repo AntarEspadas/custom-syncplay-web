@@ -76,6 +76,7 @@
 body {
     background: #EFEFEF;
     margin: 0;
+    overflow: hidden;
 }
 
 #sidebar {
