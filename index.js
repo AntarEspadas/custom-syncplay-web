@@ -156,6 +156,14 @@ vid_player.addEventListener("playlistchanged", function(e){
         playlist = testPlaylist;
         window.syncplayjs.sendPlaylist(playlist);
     }
+    sidebar.innerHTML = "";
+    for (let i = 0; i < playlist.length; i++) {
+        let playlistElement = document.createElement("div");
+        playlistElement.className = "playlist-entry";
+        playlistElement.playlistIndex = i;
+        playlistElement.innerHTML = `<p>${getFilename(playlist[i])}</p>`;
+        sidebar.appendChild(playlistElement);
+    }
     toastr.info(message);
 });
 
@@ -201,3 +209,9 @@ function arraysEqual(a, b) {
     }
     return true;
   }
+
+function getFilename(url){
+    let filename = url.split("/").pop();
+    filename = filename.substring(0, filename.lastIndexOf("."));
+    return decodeURI(filename);
+}
