@@ -5,6 +5,9 @@ const specialRooms = {
     "test" : ["http://futaba.pls-step-on.me/media/Gura%20doesn't%20know%20I%20exist-RXoHkAfrxzA.mp4", "http://futaba.pls-step-on.me/media/pop-on-rocks-1h.mp4"],
     "bakemonogatari": []
 }
+for (let i = 1; i <= 15; i++) {
+    specialRooms.bakemonogatari.push(encodeURI(`http://futaba.pls-step-on.me/media/bakemonogatari/Bakemonogatari - ${i}.mp4`));
+}
 
 // function pick() {
 //     $("#fpicker").click();
