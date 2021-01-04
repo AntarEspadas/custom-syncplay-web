@@ -35,6 +35,11 @@ let sidebar = document.getElementById("sidebar");
 usernameInput.value = "Guest_" + Math.ceil(Math.random() * 1000);
 usernameInput.select();
 
+if (params.has("username")){
+    usernameInput.value = params.get("username");
+    start();
+}
+
 function start() {
     if (usernameInput.value == "")
         return;
