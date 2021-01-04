@@ -31,7 +31,7 @@ let usernameInput = document.getElementById("username-input")
 let okButton = document.getElementById("username-prompt").getElementsByTagName("button")[0]
 let playlist = null;
 let playlistIndex;
-let sidebar = document.getElementById("sidebar");
+let playlistSidebar = document.getElementById("playlistSidebar");
 usernameInput.value = "Guest_" + Math.ceil(Math.random() * 1000);
 usernameInput.select();
 
@@ -46,7 +46,7 @@ function start() {
     username = usernameInput.value;
     document.getElementById("main-container").removeChild(document.getElementById("username-prompt"));
     vid_player.style.display = "block";
-    sidebar.style.display = "block";
+    playlistSidebar.style.display = "block";
 
     function onconnect(e) {
         if (e.connected) {
@@ -171,14 +171,14 @@ vid_player.addEventListener("playlistchanged", function (e) {
         window.syncplayjs.sendPlaylist(playlist);
         window.syncplayjs.sendPlaylistIndex(0);
     }
-    sidebar.innerHTML = "";
+    playlistSidebar.innerHTML = "";
     for (let i = 0; i < playlist.length; i++) {
         let playlistElement = document.createElement("div");
         playlistElement.className = "playlist-entry";
         playlistElement.playlistIndex = i;
         playlistElement.innerHTML = `<p>${getFilename(playlist[i])}</p>`;
         playlistElement.addEventListener("click", playlistEntryClicked);
-        sidebar.appendChild(playlistElement);
+        playlistSidebar.appendChild(playlistElement);
     }
     toastr.info(message);
 });
