@@ -27,12 +27,13 @@ vid_player.initialized = false;
 //     window.filesize = $("#fpicker")[0].files[0].size;
 // });
 let username = null;
-let usernameInput = document.getElementById("username-input")
-let okButton = document.getElementById("username-prompt").getElementsByTagName("button")[0]
 let playlist = null;
 let playlistIndex;
-let playlistSidebar = document.getElementById("playlistSidebar");
-let membersSidebar = document.getElementById("membersSidebar");
+let userlist = [];
+const usernameInput = document.getElementById("username-input")
+const okButton = document.getElementById("username-prompt").getElementsByTagName("button")[0]
+const playlistSidebar = document.getElementById("playlistSidebar");
+const membersSidebar = document.getElementById("membersSidebar");
 usernameInput.value = "Guest_" + Math.ceil(Math.random() * 1000);
 usernameInput.select();
 
@@ -103,6 +104,12 @@ $(vid_player).on("listusers", function (e) {
         // var filesize = e.detail[user].file.size; // bytes
         // var file_duration = e.detail[user].file.duration; // seconds
     }
+    userlist = [];
+    for (const user in e.detail) {
+        userlist.push(user);
+    }
+    userlist.sort();
+    updateUserList(userlist);
 });
 
 $(vid_player).on("userlist", function (e) {
@@ -244,4 +251,14 @@ function playlistEntryClicked(e) {
         source = source.parentElement;
     }
     syncplayjs.sendPlaylistIndex(source.playlistIndex)
+}
+
+function updateUserList(list){
+    membersSidebar.innerHTML = "";
+    list.forEach(user => {
+        let userElement = document.createElement("div");
+        userElement.className = "member";
+        userElement.innerHTML = `<p>${user}</p>`;
+        membersSidebar.appendChild(userElement);
+    });
 }
