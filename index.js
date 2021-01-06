@@ -32,6 +32,7 @@ let okButton = document.getElementById("username-prompt").getElementsByTagName("
 let playlist = null;
 let playlistIndex;
 let playlistSidebar = document.getElementById("playlistSidebar");
+let membersSidebar = document.getElementById("membersSidebar");
 usernameInput.value = "Guest_" + Math.ceil(Math.random() * 1000);
 usernameInput.select();
 
@@ -45,8 +46,13 @@ function start() {
         return;
     username = usernameInput.value;
     document.getElementById("main-container").removeChild(document.getElementById("username-prompt"));
+    let elements = document.getElementsByClassName("sidebar");
+    for (let i = 0; i < elements.length; i++){
+        elements[i].style.display = "block";
+    }
     vid_player.style.display = "block";
-    playlistSidebar.style.display = "block";
+    // playlistSidebar.style.display = "block";
+    // membersSidebar.style.display = "block";
 
     function onconnect(e) {
         if (e.connected) {

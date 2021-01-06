@@ -80,17 +80,67 @@ body {
 }
 
 .sidebar {
-    position: absolute;
+    position: relative;
     width: 17%;
     height: 100vh;
-    right: 0;
-    top: 0;
     background: white;
-    -webkit-box-shadow: 11px 0px 15px 0px #000000;
-    box-shadow: 11px 0px 15px 0px #000000;
     margin: 0;
     padding: 0;
     overflow-y: scroll;
+    overflow-x: hidden;
+    right: 0;
+    -webkit-box-shadow: 11px 0px 15px 0px #000000;
+    box-shadow: 11px 0px 15px 0px #000000;
+}
+
+#playlistSidebar{
+}
+
+#membersSidebarContainer{
+    left: 0;
+    -webkit-box-shadow: -11px 0px 15px 0px #000000;
+    box-shadow: -11px 0px 15px 0px #000000;
+    overflow: hidden;
+}
+
+#membersSidebar{
+    height: 95vh;
+    overflow: auto;
+}
+
+#membersSidebarHeading{
+    min-height: 5vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+#membersSidebarHeading p{
+    margin: 0;
+    font-size: 3vh;
+}
+
+.member{
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+    min-height: 30px;
+    padding-left: 5px;
+    padding-right: 5px;
+    background-color: rgb(241, 241, 241);
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    text-align: center;
+    transition: 350ms;
+}
+
+.member p{
+    margin: auto;
 }
 
 .playlist-entry {
