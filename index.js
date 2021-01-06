@@ -94,16 +94,8 @@ $(vid_player).on("loadeddata", function (e) {
 });
 
 $(vid_player).on("listusers", function (e) {
+    console.log("listusers");
     syncplayjs.seeked();
-    for (var i = 0; i < Object.keys(e.detail).length; i++) {
-        var user = Object.keys(e.detail)[i];
-        if (user == username) {
-            continue;
-        }
-        // var filename = e.detail[user].file.name;
-        // var filesize = e.detail[user].file.size; // bytes
-        // var file_duration = e.detail[user].file.duration; // seconds
-    }
     userlist = [];
     for (const user in e.detail) {
         userlist.push(user);
@@ -113,9 +105,17 @@ $(vid_player).on("listusers", function (e) {
 });
 
 $(vid_player).on("userlist", function (e) {
-    var user = e.detail.user;
-    var user_event = e.detail.evt;
+    const user = e.detail.user;
+    const user_event = e.detail.evt;
     toastr.info("'" + user + "' " + user_event);
+    if (user_event == "left"){
+        userlist.splice(userlist.indexOf(user), 1);
+    }
+    else if (user_event == "joined"){
+        userlist.push(user);
+        userlist.sort();
+    }
+    updateUserList(userlist);
 });
 
 window.seekFromEvent = false;
