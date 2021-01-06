@@ -13,7 +13,7 @@ for (let i = 1; i <= 15; i++) {
 //     $("#fpicker").click();
 // }
 var vid_player = $("#node")[0];
-vid_player.volume = 0.3;
+vid_player.volume = Cookies.get("volume") || 0.3;
 vid_player.initialized = false;
 
 // var username = null;
@@ -26,7 +26,7 @@ vid_player.initialized = false;
 //     window.filename = $("#fpicker")[0].files[0].name;
 //     window.filesize = $("#fpicker")[0].files[0].size;
 // });
-let username = null;
+let username;
 let playlist = null;
 let playlistIndex;
 let userlist = [];
@@ -34,7 +34,7 @@ const usernameInput = document.getElementById("username-input")
 const okButton = document.getElementById("username-prompt").getElementsByTagName("button")[0]
 const playlistSidebar = document.getElementById("playlistSidebar");
 const membersSidebar = document.getElementById("membersSidebar");
-usernameInput.value = "Guest_" + Math.ceil(Math.random() * 1000);
+usernameInput.value = Cookies.get("username") || (username = "Guest_" + Math.ceil(Math.random() * 1000));
 usernameInput.select();
 
 if (params.has("username")){
@@ -45,6 +45,8 @@ if (params.has("username")){
 function start() {
     if (usernameInput.value == "")
         return;
+    if (username != usernameInput.value)
+        Cookies.set("username", usernameInput.value, {sameSite: "Lax"})
     username = usernameInput.value;
     document.getElementById("main-container").removeChild(document.getElementById("username-prompt"));
     let elements = document.getElementsByClassName("sidebar");
@@ -194,6 +196,10 @@ vid_player.addEventListener("playlistchanged", function (e) {
         playlistSidebar.appendChild(playlistElement);
     }
     toastr.info(message);
+});
+
+vid_player.addEventListener("volumechange", function (e){
+    Cookies.set("volume", vid_player.volume, {sameSite: "Lax"});
 });
 
 $(vid_player).on("seeked", function (e) {
