@@ -211,3 +211,25 @@ body {
     border-width: 2px;
     border-color: #000000;
 }
+
+#playlist-editor{
+    position: fixed;
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    justify-content: center;
+    align-items: center;
+}
+
+#playlist-editor div{
+    width: 70vh;
+    height: 70vh;
+    background: white;
+    border-radius: 2vh;
+}
+
+#playlist-input{
+    white-space: nowrap;
+}

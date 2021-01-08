@@ -30,6 +30,7 @@ let username;
 let playlist = null;
 let playlistIndex;
 let userlist = [];
+let newPlaylist = [];
 const usernameInput = document.getElementById("username-input")
 const okButton = document.getElementById("username-prompt").getElementsByTagName("button")[0]
 const playlistSidebar = document.getElementById("playlistSidebar");
@@ -220,6 +221,35 @@ $(vid_player).on("play", function (e) {
 $(vid_player).on("pause", function (e) {
     syncplayjs.playPause();
 });
+
+document.getElementById("edit-playlist-button").addEventListener("click", function(e){
+    const editor = document.getElementById("playlist-editor");
+    const editorDiv = editor.getElementsByTagName("div")[0];
+    const playlistInput = document.getElementById("playlist-input");
+    const animationOptions = {duration: 450, easing: "ease-out"};
+    playlistInput.value = playlist != null ? playlist.join("\n") : "";
+    editor.style.display = "flex";
+    editor.animate([{"background" : "rgba(0,0,0,0)"}, {"background": "rgba(0,0,0,0.75)"}], {...animationOptions, ...{fill : "forwards"}});
+    editorDiv.animate([{"transform" : "translateY(-50vh)"}, {"transform" : "translateY(0px)"}], animationOptions);
+});
+
+document.getElementById("playlist-cancel-button").addEventListener("click", closePlaylistEditor)
+
+document.getElementById("playlist-ok-button").addEventListener("click", function(e){
+    closePlaylistEditor();
+    newPlaylist = document.getElementById("playlist-input").value.split("\n");
+    newPlaylist = newPlaylist.filter(element => /\S/.test(element));
+    syncplayjs.sendPlaylist(newPlaylist);
+})
+
+function closePlaylistEditor(){
+    const editor = document.getElementById("playlist-editor");
+    const editorDiv = editor.getElementsByTagName("div")[0];
+    const animationOptions = {duration: 250};
+    editorDiv.animate([{"transform" : "translateY(0px)"}, {"transform" : "translateY(-50vh)"}], animationOptions);
+    editor.animate([{"background": "rgba(0,0,0,0.75)"}, {"background" : "rgba(0,0,0,0)"}], {...animationOptions, ...{fill:"forwards"}})
+    .onfinish = () => editor.style.display = "none";
+}
 
 toastr.options = {
     "closeButton": true,
