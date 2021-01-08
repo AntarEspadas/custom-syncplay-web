@@ -93,7 +93,45 @@ body {
     box-shadow: 11px 0px 15px 0px #000000;
 }
 
+#rightSidebarContainer{
+    overflow: hidden;
+}
+
+#rightSidebarSelector{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#rightSidebarSelector button{
+    width: 50%;
+    height: 5vh;
+    border: none;
+}
+
+#rightSidebarSelector button:hover{
+    cursor: pointer;
+}
+
 #playlistSidebar{
+    height: 90vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+#edit-playlist-button{
+    width: 100%;
+    height: 5vh;
+    border: none;
+    font-size: 2.5vh;
+    transition: 350ms;
+    background: white;
+}
+
+#edit-playlist-button:hover{
+    cursor: pointer;
+    background: lightgray;
+    transition: 500ms;
 }
 
 #membersSidebarContainer{

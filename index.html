@@ -31,7 +31,16 @@
     <!-- 
      -->
     <video id="node" controls="true" style="display: none;"></video>
-    <div id="playlistSidebar" class="sidebar" style="display: none;"></div>
+    <div id="rightSidebarContainer" class="sidebar" style="display: none;">
+      <div id="rightSidebarSelector">
+        <button onclick="this.blur()">Chat</button>
+        <button onclick="this.blur()">Playlist</button>
+      </div>
+      <div id="playlist-sidebar-container">
+        <div id="playlistSidebar"></div>
+        <button id="edit-playlist-button">Edit playlist</button>
+      </div>
+    </div>
   </div>
   <script src="index.js"></script>
 </body>
