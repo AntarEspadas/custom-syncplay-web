@@ -245,6 +245,11 @@ var SyncPlay = function (initobj, onconnected, videonode) {
     send(payload);
   }
 
+  function sendChat(message){
+    let payload = {"Chat": message};
+    send(payload);
+  }
+
   function sendRoomEvent(evt) {
     var user = username;
     var payload = {
@@ -342,7 +347,8 @@ var SyncPlay = function (initobj, onconnected, videonode) {
     getPlaylistIndex: getPlaylistIndex,
     getPlaylist: getPlaylist,
     sendPlaylistIndex: sendPlaylistIndex,
-    sendPlaylist: sendPlaylist
+    sendPlaylist: sendPlaylist,
+    sendChat: sendChat
   }
 };
 
