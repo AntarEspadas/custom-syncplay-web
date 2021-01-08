@@ -196,6 +196,12 @@ vid_player.addEventListener("playlistchanged", function (e) {
     toastr.info(message);
 });
 
+vid_player.addEventListener("chatmessage", function(e){
+    let message = e.detail.message;
+    let senderUsername = e.detail.username;
+    console.log(message, senderUsername);
+})
+
 vid_player.addEventListener("volumechange", function (e){
     Cookies.set("volume", vid_player.volume, {sameSite: "Lax"});
 });

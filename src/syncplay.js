@@ -204,6 +204,14 @@ var SyncPlay = function (initobj, onconnected, videonode) {
         }
         sendState(position, paused, seek, latencyCalculation, stateChanged);
       }
+      if (payload.hasOwnProperty("Chat")){
+        let sevent = new CustomEvent("chatmessage",{
+          detail: payload.Chat,
+          bubbles: true,
+          cancelable: true
+        });
+        node.dispatchEvent(sevent);
+      }
     }
   }
 
