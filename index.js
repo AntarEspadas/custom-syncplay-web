@@ -89,14 +89,12 @@ usernameInput.addEventListener("keyup", function (e) {
 })
 
 $(vid_player).on("loadeddata", function (e) {
-    console.log("loadeddata")
     vid_player.initialized = true;
     syncplayjs.set_file(vid_player.src, vid_player.duration, 0);
     document.title = getFilename(vid_player.src);
 });
 
 $(vid_player).on("listusers", function (e) {
-    console.log("listusers");
     syncplayjs.seeked();
     userlist = [];
     for (const user in e.detail) {
