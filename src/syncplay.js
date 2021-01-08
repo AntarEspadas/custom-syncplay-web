@@ -100,7 +100,7 @@ var SyncPlay = function (initobj, onconnected, videonode) {
         break;
       }
       var payload = JSON.parse(split_payload[index]);
-      console.log("Server << " + JSON.stringify(payload));
+      console.debug("Server << " + JSON.stringify(payload));
       if (payload.hasOwnProperty("Hello")) {
         motd = payload.Hello.motd;
         username = payload.Hello.username;
@@ -282,7 +282,7 @@ var SyncPlay = function (initobj, onconnected, videonode) {
   }
 
   function send(message) {
-    console.log("Client >> " + JSON.stringify(message));
+    console.debug("Client >> " + JSON.stringify(message));
     message = JSON.stringify(message) + "\r\n";
     socket.send_string(message);
   }
