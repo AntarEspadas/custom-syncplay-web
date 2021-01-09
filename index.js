@@ -267,6 +267,21 @@ document.getElementById("select-playlist-button").addEventListener("click", func
     document.getElementById("playlist-sidebar-container").hidden = false;
 })
 
+document.getElementById("chat-input").addEventListener("keyup", function(e) {
+    if(e.key == "Enter")
+        sendChat();
+});
+
+document.getElementById("chat-send").addEventListener("click", sendChat);
+
+function sendChat(){
+    let chatInput = document.getElementById("chat-input");
+    if (chatInput.value == "")
+        return;
+    syncplayjs.sendChat(chatInput.value);
+    chatInput.value = "";
+}
+
 function selectSelf(e){
     e.target.blur();
     document.getElementsByClassName("selected-sidebar-select-button")[0].className = "sidebar-select-button"
