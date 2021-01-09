@@ -123,6 +123,7 @@ body {
     height: 5vh;
     border: none;
     transition: none;
+    font-size: 3vh;
 }
 
 .sidebar-select-button:hover{
@@ -136,6 +137,7 @@ body {
     height: 5vh;
     border: none;
     transition: none;
+    font-size: 3vh;
 }
 
 .selected-sidebar-select-button:hover{
@@ -312,6 +314,7 @@ body {
     width:20%;
     background: white;
     height: 55%;
+    font-size: 2vh;
 }
 
 #chat-send:hover{
