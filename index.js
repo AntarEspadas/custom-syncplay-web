@@ -26,6 +26,7 @@ vid_player.initialized = false;
 //     window.filename = $("#fpicker")[0].files[0].name;
 //     window.filesize = $("#fpicker")[0].files[0].size;
 // });
+let darkmode = false;
 let username;
 let playlist = null;
 let playlistIndex;
@@ -273,6 +274,18 @@ document.getElementById("chat-input").addEventListener("keyup", function (e) {
 });
 
 document.getElementById("chat-send").addEventListener("click", sendChat);
+
+document.getElementById("dark-mode-button").addEventListener("click", function() {
+    const head = $("head");
+    if (darkmode){
+        head[0].removeChild($("#dark-mode-stylesheet")[0]);
+        darkmode = false;
+    }
+    else{
+        head.append($('<link id="dark-mode-stylesheet" rel="stylesheet" href="index-dark.css">'));
+        darkmode = true;
+    }
+})
 
 function sendChat() {
     let chatInput = document.getElementById("chat-input");
