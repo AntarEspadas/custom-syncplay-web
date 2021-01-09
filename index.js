@@ -26,7 +26,7 @@ vid_player.initialized = false;
 //     window.filename = $("#fpicker")[0].files[0].name;
 //     window.filesize = $("#fpicker")[0].files[0].size;
 // });
-let darkmode = !Cookies.get("darkmode");
+let darkmode = Cookies.get("darkmode") !== "true";
 let username;
 let playlist = null;
 let playlistIndex;
