@@ -87,6 +87,7 @@ button:hover {
 }
 
 body {
+    transition: background 350ms;
     background: #EFEFEF;
     margin: 0;
     overflow: hidden;
@@ -94,6 +95,7 @@ body {
 }
 
 .sidebar {
+    transition: background 350ms;
     position: relative;
     width: 17%;
     height: 100vh;
@@ -122,13 +124,11 @@ body {
     width: 50%;
     height: 5vh;
     border: none;
-    transition: none;
     font-size: 3vh;
 }
 
 .sidebar-select-button:hover {
     background: rgb(228, 228, 228);
-    transition: none;
 }
 
 .selected-sidebar-select-button {
@@ -136,13 +136,11 @@ body {
     width: 50%;
     height: 5vh;
     border: none;
-    transition: none;
     font-size: 3vh;
 }
 
 .selected-sidebar-select-button:hover {
     background: white;
-    transition: none;
 }
 
 #rightSidebarSelector button:hover {
