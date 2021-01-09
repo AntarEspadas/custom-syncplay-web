@@ -226,7 +226,7 @@ document.getElementById("edit-playlist-button").addEventListener("click", functi
     const editor = document.getElementById("playlist-editor");
     const editorDiv = editor.getElementsByTagName("div")[0];
     const playlistInput = document.getElementById("playlist-input");
-    const animationOptions = {duration: 450, easing: "ease-out"};
+    const animationOptions = {duration: 350, easing: "ease-out"};
     playlistInput.value = playlist != null ? playlist.join("\n") : "";
     editor.style.display = "flex";
     editor.animate([{"background" : "rgba(0,0,0,0)"}, {"background": "rgba(0,0,0,0.75)"}], {...animationOptions, ...{fill : "forwards"}});
