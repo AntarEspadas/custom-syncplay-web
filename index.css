@@ -268,7 +268,7 @@ body {
 }
 
 #playlist-input {
-    white-space: nowrap;
+    white-space: pre;
     width: 95%;
     height: 70%;
     margin: auto;
