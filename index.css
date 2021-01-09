@@ -44,6 +44,19 @@
     opacity: 0.6;
 }
 
+button{
+    border: none;
+    border-radius: 10%;
+    transition: 350ms;
+    background: rgb(241, 241, 241);
+}
+
+button:hover{
+    background: lightgray;
+    cursor: pointer;
+    transition: 500ms;
+}
+
 #username-prompt {
     background: white;
     width: 400px;
@@ -262,15 +275,42 @@ body {
 #playlist-editor-buttons-wrapper button{
     height: 70%;
     width: 15%;
-    border: none;
-    border-radius: 10%;
     font-size: 70%;
-    transition: 350ms;
-    background: rgb(241, 241, 241);
 }
 
-#playlist-editor-buttons-wrapper button:hover{
+#chat-input-wrapper{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 100%;
+    height: 6%;
+    background: rgb(226, 226, 226);
+}
+
+#chat-input{
+    width: 70%;
+    height: 55%;
+    border-radius: 0.5vh;
+    border: none;
+    background: white;
+}
+
+#chat-send{
+    width:20%;
+    background: white;
+    height: 55%;
+}
+
+#chat-send:hover{
     background: lightgray;
-    cursor: pointer;
-    transition: 500ms;
+}
+
+#chat-sidebar{
+    width: 100%;
+    height: 94%;
+}
+
+#chat-sidebar-container{
+    width: 100%;
+    height: 95vh;
 }
