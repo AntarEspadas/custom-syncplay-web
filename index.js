@@ -26,7 +26,7 @@ vid_player.initialized = false;
 //     window.filename = $("#fpicker")[0].files[0].name;
 //     window.filesize = $("#fpicker")[0].files[0].size;
 // });
-let darkmode = false;
+let darkmode = !Cookies.get("darkmode");
 let username;
 let playlist = null;
 let playlistIndex;
@@ -39,6 +39,13 @@ const membersSidebar = document.getElementById("membersSidebar");
 usernameInput.value = Cookies.get("username") || (username = "Guest_" + Math.ceil(Math.random() * 1000));
 usernameInput.select();
 
+if (darkmode) {
+    darkmode = !darkmode;
+}
+else{
+    toggleDarkmode()
+}
+
 if (params.has("username")) {
     usernameInput.value = params.get("username");
     start();
@@ -48,7 +55,7 @@ function start() {
     if (usernameInput.value == "")
         return;
     if (username != usernameInput.value)
-        Cookies.set("username", usernameInput.value, { sameSite: "Lax" })
+        Cookies.set("username", usernameInput.value, { sameSite: "Lax", expires: 3650 })
     username = usernameInput.value;
     document.getElementById("main-container").removeChild(document.getElementById("username-prompt"));
     let elements = document.getElementsByClassName("sidebar");
@@ -209,7 +216,7 @@ vid_player.addEventListener("chatmessage", function (e) {
 })
 
 vid_player.addEventListener("volumechange", function (e) {
-    Cookies.set("volume", vid_player.volume, { sameSite: "Lax" });
+    Cookies.set("volume", vid_player.volume, { sameSite: "Lax", expires: 3650 });
 });
 
 $(vid_player).on("seeked", function (e) {
@@ -275,7 +282,9 @@ document.getElementById("chat-input").addEventListener("keyup", function (e) {
 
 document.getElementById("chat-send").addEventListener("click", sendChat);
 
-document.getElementById("dark-mode-button").addEventListener("click", function() {
+document.getElementById("dark-mode-button").addEventListener("click", toggleDarkmode)
+
+function toggleDarkmode() {
     const head = $("head");
     if (darkmode){
         head[0].removeChild($("#dark-mode-stylesheet")[0]);
@@ -285,7 +294,8 @@ document.getElementById("dark-mode-button").addEventListener("click", function()
         head.append($('<link id="dark-mode-stylesheet" rel="stylesheet" href="index-dark.css">'));
         darkmode = true;
     }
-})
+    Cookies.set("darkmode", darkmode, { sameSite: "Lax", expires: 3650 })
+}
 
 function sendChat() {
     let chatInput = document.getElementById("chat-input");
