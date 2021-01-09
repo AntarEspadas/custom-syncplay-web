@@ -326,3 +326,28 @@ function updateUserList(list){
         membersSidebar.appendChild(userElement);
     });
 }
+
+function showChat(message, user){
+    let chatElement = document.createElement("div");
+    chatElement.className = "chat-element";
+
+    let timestamp = document.createElement("p");
+    timestamp.className = "chat-timestamp"
+    let date = new Date();
+    timestamp.textContent = `[${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}] `
+
+    chatElement.appendChild(timestamp);
+    if (user != undefined){
+        let chatUser = document.createElement("p");
+        chatUser.className = "chat-username";
+        chatUser.textContent = `<${user}> `
+        chatElement.appendChild(chatUser);
+    }
+    
+    let chatMessage = document.createElement("p");
+    chatMessage.className = "chat-message";
+    chatMessage.textContent = message;
+    chatElement.appendChild(chatMessage);
+
+    document.getElementById("chat-sidebar").appendChild(chatElement);
+}
