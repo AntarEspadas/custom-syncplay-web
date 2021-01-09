@@ -43,11 +43,13 @@
     </div>
   </div>
   <div id="playlist-editor" style="display: none;">
-    <div>
+    <div id="playlist-editor-box">
       <p>Enter playlist videos (one per line)</p>
-      <textarea name="playlist" id="playlist-input" cols="30" rows="10"></textarea>
-      <button id="playlist-ok-button">Ok</button>
-      <button id="playlist-cancel-button">Cancel</button>
+      <textarea name="playlist" id="playlist-input"></textarea>
+      <div id="playlist-editor-buttons-wrapper">
+        <button id="playlist-ok-button">Ok</button>
+        <button id="playlist-cancel-button">Cancel</button>
+      </div>
     </div>
   </div>
   <script src="index.js"></script>

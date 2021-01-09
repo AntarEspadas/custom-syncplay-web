@@ -224,13 +224,45 @@ body {
     align-items: center;
 }
 
-#playlist-editor div{
+#playlist-editor-box{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
     width: 70vh;
     height: 70vh;
     background: white;
     border-radius: 2vh;
+    font-size: 3.5vh;
 }
 
 #playlist-input{
     white-space: nowrap;
+    width: 95%;
+    height: 70%;
+    margin: auto;
+    resize: none;
+}
+
+#playlist-editor-buttons-wrapper{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    height: 10%;
+    width: 95%;
+}
+
+#playlist-editor-buttons-wrapper button{
+    height: 70%;
+    width: 15%;
+    border: none;
+    border-radius: 10%;
+    font-size: 70%;
+    transition: 350ms;
+    background: rgb(241, 241, 241);
+}
+
+#playlist-editor-buttons-wrapper button:hover{
+    background: lightgray;
+    cursor: pointer;
+    transition: 500ms;
 }
