@@ -202,9 +202,9 @@ vid_player.addEventListener("playlistchanged", function (e) {
 });
 
 vid_player.addEventListener("chatmessage", function(e){
-    let message = e.detail.message;
-    let senderUsername = e.detail.username;
-    console.log(message, senderUsername);
+    const message = e.detail.message;
+    const senderUsername = e.detail.username;
+    showChat(message, senderUsername);
 })
 
 vid_player.addEventListener("volumechange", function (e){
