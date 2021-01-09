@@ -124,11 +124,19 @@ body {
     border: none;
 }
 
+.sidebar-select-button:hover{
+    background:rgb(240, 240, 240);
+}
+
 .selected-sidebar-select-button{
     background: white;
     width: 50%;
     height: 5vh;
     border: none;
+}
+
+.selected-sidebar-select-button:hover{
+    background: white;
 }
 
 #rightSidebarSelector button:hover{
