@@ -349,7 +349,7 @@ function showChat(message, user) {
     let timestamp = document.createElement("p");
     timestamp.className = "chat-timestamp"
     let date = new Date();
-    timestamp.textContent = `[${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}] `
+    timestamp.textContent = `[${date.getHours().toString().padStart(2,"0")}:${date.getMinutes().toString().padStart(2,"0")}:${date.getSeconds().toString().padStart(2,"0")}] `
 
     chatElement.appendChild(timestamp);
     if (user != undefined) {
