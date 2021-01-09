@@ -154,6 +154,9 @@ $(vid_player).on("userevent", function (e) {
 });
 
 vid_player.addEventListener("playlistindex", function (e) {
+    if (playlist == null || playlist.length == 0){
+        return;
+    }
     playlistIndex = e.detail.index;
     if (playlist[playlistIndex] == vid_player.src) {
         return;
@@ -165,7 +168,7 @@ vid_player.addEventListener("playlistindex", function (e) {
         window.syncplayjs.sendPlaylistIndex(playlistIndex);
     }
     vid_player.initialized = false;
-    vid_player.src = playlist[playlistIndex];
+    vid_player.src = playlist[playlistIndex] || "";
     let selectedElement = document.getElementById("selected-entry");
     if (selectedElement != undefined)
         selectedElement.id = undefined;
