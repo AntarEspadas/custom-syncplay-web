@@ -33,10 +33,17 @@
     <video id="node" controls="true" style="display: none;"></video>
     <div id="rightSidebarContainer" class="sidebar" style="display: none;">
       <div id="rightSidebarSelector">
-        <button onclick="this.blur()">Chat</button>
-        <button onclick="this.blur()">Playlist</button>
+        <button class="selected-sidebar-select-button" id="select-chat-button">Chat</button>
+        <button class="sidebar-select-button" id="select-playlist-button">Playlist</button>
       </div>
-      <div id="playlist-sidebar-container">
+      <div id="chat-sidebar-container">
+        <div id="chat-sidebar"></div>
+        <div id="chat-input-wrapper">
+          <input type="text" id="chat-input">
+          <button id="chat-send">Send</button>
+        </div>
+      </div>
+      <div id="playlist-sidebar-container" hidden>
         <div id="playlistSidebar"></div>
         <button id="edit-playlist-button">Edit playlist</button>
       </div>
