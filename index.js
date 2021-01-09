@@ -193,7 +193,8 @@ vid_player.addEventListener("playlistchanged", function (e) {
         let playlistElement = document.createElement("div");
         playlistElement.className = "playlist-entry";
         playlistElement.playlistIndex = i;
-        playlistElement.innerHTML = `<p>${getFilename(playlist[i])}</p>`;
+        playlistElement.innerHTML = "<p></p>";
+        playlistElement.firstChild.textContent = getFilename(playlist[i]);
         playlistElement.addEventListener("click", playlistEntryClicked);
         playlistSidebar.appendChild(playlistElement);
     }
@@ -319,7 +320,8 @@ function updateUserList(list){
     list.forEach(user => {
         let userElement = document.createElement("div");
         userElement.className = "member";
-        userElement.innerHTML = `<p>${user}</p>`;
+        userElement.innerHTML = `<p></p>`;
+        userElement.firstChild.textContent = user;
         membersSidebar.appendChild(userElement);
     });
 }
