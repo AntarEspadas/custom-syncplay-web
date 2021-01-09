@@ -2,7 +2,7 @@ const params = new URLSearchParams(window.location.search);
 const server = params.get("server") || "futaba.pls-step-on.me:9000";
 const room = params.get("room") || "master";
 const specialRooms = {
-    "test" : ["http://futaba.pls-step-on.me/media/Gura%20doesn't%20know%20I%20exist-RXoHkAfrxzA.mp4", "http://futaba.pls-step-on.me/media/pop-on-rocks-1h.mp4"],
+    "test": ["http://futaba.pls-step-on.me/media/Gura%20doesn't%20know%20I%20exist-RXoHkAfrxzA.mp4", "http://futaba.pls-step-on.me/media/pop-on-rocks-1h.mp4"],
     "bakemonogatari": []
 }
 for (let i = 1; i <= 15; i++) {
@@ -38,7 +38,7 @@ const membersSidebar = document.getElementById("membersSidebar");
 usernameInput.value = Cookies.get("username") || (username = "Guest_" + Math.ceil(Math.random() * 1000));
 usernameInput.select();
 
-if (params.has("username")){
+if (params.has("username")) {
     usernameInput.value = params.get("username");
     start();
 }
@@ -47,11 +47,11 @@ function start() {
     if (usernameInput.value == "")
         return;
     if (username != usernameInput.value)
-        Cookies.set("username", usernameInput.value, {sameSite: "Lax"})
+        Cookies.set("username", usernameInput.value, { sameSite: "Lax" })
     username = usernameInput.value;
     document.getElementById("main-container").removeChild(document.getElementById("username-prompt"));
     let elements = document.getElementsByClassName("sidebar");
-    for (let i = 0; i < elements.length; i++){
+    for (let i = 0; i < elements.length; i++) {
         elements[i].style.display = "block";
     }
     vid_player.style.display = "block";
@@ -109,10 +109,10 @@ $(vid_player).on("userlist", function (e) {
     const user = e.detail.user;
     const user_event = e.detail.evt;
     toastr.info("'" + user + "' " + user_event);
-    if (user_event == "left"){
+    if (user_event == "left") {
         userlist.splice(userlist.indexOf(user), 1);
     }
-    else if (user_event == "joined"){
+    else if (user_event == "joined") {
         userlist.push(user);
         userlist.sort();
     }
@@ -154,7 +154,7 @@ $(vid_player).on("userevent", function (e) {
 });
 
 vid_player.addEventListener("playlistindex", function (e) {
-    if (playlist == null || playlist.length == 0){
+    if (playlist == null || playlist.length == 0) {
         return;
     }
     playlistIndex = e.detail.index;
@@ -201,14 +201,14 @@ vid_player.addEventListener("playlistchanged", function (e) {
     toastr.info(message);
 });
 
-vid_player.addEventListener("chatmessage", function(e){
+vid_player.addEventListener("chatmessage", function (e) {
     const message = e.detail.message;
     const senderUsername = e.detail.username;
     showChat(message, senderUsername);
 })
 
-vid_player.addEventListener("volumechange", function (e){
-    Cookies.set("volume", vid_player.volume, {sameSite: "Lax"});
+vid_player.addEventListener("volumechange", function (e) {
+    Cookies.set("volume", vid_player.volume, { sameSite: "Lax" });
 });
 
 $(vid_player).on("seeked", function (e) {
@@ -226,55 +226,55 @@ $(vid_player).on("pause", function (e) {
     syncplayjs.playPause();
 });
 
-document.getElementById("edit-playlist-button").addEventListener("click", function(e){
+document.getElementById("edit-playlist-button").addEventListener("click", function (e) {
     const editor = document.getElementById("playlist-editor");
     const editorDiv = editor.getElementsByTagName("div")[0];
     const playlistInput = document.getElementById("playlist-input");
-    const animationOptions = {duration: 350, easing: "ease-out"};
+    const animationOptions = { duration: 350, easing: "ease-out" };
     playlistInput.value = playlist != null ? playlist.join("\n") : "";
     editor.style.display = "flex";
-    editor.animate([{"background" : "rgba(0,0,0,0)"}, {"background": "rgba(0,0,0,0.75)"}], {...animationOptions, ...{fill : "forwards"}});
-    editorDiv.animate([{"transform" : "translateY(-50vh)"}, {"transform" : "translateY(0px)"}], animationOptions);
+    editor.animate([{ "background": "rgba(0,0,0,0)" }, { "background": "rgba(0,0,0,0.75)" }], { ...animationOptions, ...{ fill: "forwards" } });
+    editorDiv.animate([{ "transform": "translateY(-50vh)" }, { "transform": "translateY(0px)" }], animationOptions);
 });
 
 document.getElementById("playlist-cancel-button").addEventListener("click", closePlaylistEditor)
 
-document.getElementById("playlist-ok-button").addEventListener("click", function(e){
+document.getElementById("playlist-ok-button").addEventListener("click", function (e) {
     closePlaylistEditor();
     newPlaylist = document.getElementById("playlist-input").value.split("\n");
     newPlaylist = newPlaylist.filter(element => /\S/.test(element));
     syncplayjs.sendPlaylist(newPlaylist);
 })
 
-function closePlaylistEditor(){
+function closePlaylistEditor() {
     const editor = document.getElementById("playlist-editor");
     const editorDiv = editor.getElementsByTagName("div")[0];
-    const animationOptions = {duration: 250};
-    editorDiv.animate([{"transform" : "translateY(0px)"}, {"transform" : "translateY(-50vh)"}], animationOptions);
-    editor.animate([{"background": "rgba(0,0,0,0.75)"}, {"background" : "rgba(0,0,0,0)"}], {...animationOptions, ...{fill:"forwards"}})
-    .onfinish = () => editor.style.display = "none";
+    const animationOptions = { duration: 250 };
+    editorDiv.animate([{ "transform": "translateY(0px)" }, { "transform": "translateY(-50vh)" }], animationOptions);
+    editor.animate([{ "background": "rgba(0,0,0,0.75)" }, { "background": "rgba(0,0,0,0)" }], { ...animationOptions, ...{ fill: "forwards" } })
+        .onfinish = () => editor.style.display = "none";
 }
 
-document.getElementById("select-chat-button").addEventListener("click", function(e){
+document.getElementById("select-chat-button").addEventListener("click", function (e) {
     selectSelf(e);
     document.getElementById("playlist-sidebar-container").hidden = true;
     document.getElementById("chat-sidebar-container").hidden = false;
 });
 
-document.getElementById("select-playlist-button").addEventListener("click", function(e){
+document.getElementById("select-playlist-button").addEventListener("click", function (e) {
     selectSelf(e);
     document.getElementById("chat-sidebar-container").hidden = true;
     document.getElementById("playlist-sidebar-container").hidden = false;
 })
 
-document.getElementById("chat-input").addEventListener("keyup", function(e) {
-    if(e.key == "Enter")
+document.getElementById("chat-input").addEventListener("keyup", function (e) {
+    if (e.key == "Enter")
         sendChat();
 });
 
 document.getElementById("chat-send").addEventListener("click", sendChat);
 
-function sendChat(){
+function sendChat() {
     let chatInput = document.getElementById("chat-input");
     if (chatInput.value == "")
         return;
@@ -282,7 +282,7 @@ function sendChat(){
     chatInput.value = "";
 }
 
-function selectSelf(e){
+function selectSelf(e) {
     e.target.blur();
     document.getElementsByClassName("selected-sidebar-select-button")[0].className = "sidebar-select-button"
     e.target.className = "selected-sidebar-select-button";
@@ -331,7 +331,7 @@ function playlistEntryClicked(e) {
     syncplayjs.sendPlaylistIndex(source.playlistIndex)
 }
 
-function updateUserList(list){
+function updateUserList(list) {
     membersSidebar.innerHTML = "";
     list.forEach(user => {
         let userElement = document.createElement("div");
@@ -342,7 +342,7 @@ function updateUserList(list){
     });
 }
 
-function showChat(message, user){
+function showChat(message, user) {
     let chatElement = document.createElement("div");
     chatElement.className = "chat-element";
 
@@ -352,13 +352,13 @@ function showChat(message, user){
     timestamp.textContent = `[${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}] `
 
     chatElement.appendChild(timestamp);
-    if (user != undefined){
+    if (user != undefined) {
         let chatUser = document.createElement("p");
         chatUser.className = "chat-username";
         chatUser.textContent = `<${user}> `
         chatElement.appendChild(chatUser);
     }
-    
+
     let chatMessage = document.createElement("p");
     chatMessage.className = "chat-message";
     chatMessage.textContent = message;
