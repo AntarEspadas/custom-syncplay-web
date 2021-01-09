@@ -314,7 +314,7 @@ body {
     width:20%;
     background: white;
     height: 55%;
-    font-size: 2vh;
+    font-size: min(2vh, 0.8vw);
 }
 
 #chat-send:hover{
