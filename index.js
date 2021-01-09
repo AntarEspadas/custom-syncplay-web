@@ -254,6 +254,24 @@ function closePlaylistEditor(){
     .onfinish = () => editor.style.display = "none";
 }
 
+document.getElementById("select-chat-button").addEventListener("click", function(e){
+    selectSelf(e);
+    document.getElementById("playlist-sidebar-container").hidden = true;
+    document.getElementById("chat-sidebar-container").hidden = false;
+});
+
+document.getElementById("select-playlist-button").addEventListener("click", function(e){
+    selectSelf(e);
+    document.getElementById("chat-sidebar-container").hidden = true;
+    document.getElementById("playlist-sidebar-container").hidden = false;
+})
+
+function selectSelf(e){
+    e.target.blur();
+    document.getElementsByClassName("selected-sidebar-select-button")[0].className = "sidebar-select-button"
+    e.target.className = "selected-sidebar-select-button";
+}
+
 toastr.options = {
     "closeButton": true,
     "debug": false,

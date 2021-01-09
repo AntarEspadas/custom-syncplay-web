@@ -104,7 +104,15 @@ body {
     justify-content: center;
 }
 
-#rightSidebarSelector button{
+.sidebar-select-button{
+    background: rgb(228, 228, 228);
+    width: 50%;
+    height: 5vh;
+    border: none;
+}
+
+.selected-sidebar-select-button{
+    background: white;
     width: 50%;
     height: 5vh;
     border: none;
