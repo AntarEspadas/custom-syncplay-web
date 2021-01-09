@@ -47,14 +47,14 @@
 button {
     border: none;
     border-radius: 10%;
-    transition: 350ms;
+    transition: background 350ms;
     background: rgb(241, 241, 241);
 }
 
 button:hover {
     background: lightgray;
     cursor: pointer;
-    transition: 500ms;
+    transition: background 500ms;
 }
 
 #username-prompt {
@@ -160,14 +160,12 @@ body {
     height: 5vh;
     border: none;
     font-size: 2.5vh;
-    transition: 350ms;
     background: white;
 }
 
 #edit-playlist-button:hover {
     cursor: pointer;
     background: lightgray;
-    transition: 500ms;
 }
 
 #membersSidebarContainer {
