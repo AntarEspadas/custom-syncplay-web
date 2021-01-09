@@ -255,14 +255,15 @@ body {
     left: 0;
     justify-content: center;
     align-items: center;
+    text-align: center;
 }
 
 #playlist-editor-box{
     display: flex;
     align-items: center;
     flex-direction: column;
-    width: 70vh;
-    height: 70vh;
+    width: min(70vh, 70vw);
+    height: min(70vh, 70vw);
     background: white;
     border-radius: 2vh;
     font-size: 3.5vh;
