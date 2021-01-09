@@ -1,6 +1,6 @@
 #node {
     max-width: 60%;
-    max-height: 100%;
+    max-height: 90%;
     display: block;
     margin: 0 auto;
     padding: 0;
@@ -342,4 +342,11 @@ body {
 
 .chat-username {
     color: darkcyan;
+}
+
+#dark-mode-button{
+    position: fixed;
+    bottom: 1vh;
+    border-radius: 0.5vh;
+    font-size: 2vh;
 }
