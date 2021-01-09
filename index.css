@@ -77,6 +77,7 @@ body {
     background: #EFEFEF;
     margin: 0;
     overflow: hidden;
+    font-family: Roboto, Arial, sans-serif;
 }
 
 .sidebar {
