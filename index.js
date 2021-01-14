@@ -116,7 +116,9 @@ $(vid_player).on("listusers", function (e) {
 $(vid_player).on("userlist", function (e) {
     const user = e.detail.user;
     const user_event = e.detail.evt;
-    toastr.info("'" + user + "' " + user_event);
+    let message = "'" + user + "' " + user_event;
+    toastr.info(message);
+    showChat(message)
     if (user_event == "left") {
         userlist.splice(userlist.indexOf(user), 1);
     }
@@ -142,22 +144,27 @@ $(vid_player).on("userevent", function (e) {
     var paused = e.detail.paused;
     var doSeek = e.detail.doSeek
 
+    let message = null;
+
     if (!paused && vid_player.paused) {
-        var message = "'" + username + "' resumes at " + position;
+        message = "'" + username + "' resumes at " + position;
         vid_player.currentTime = e.detail.position;
         vid_player.play();
         toastr.info(message);
     }
     if (paused && !vid_player.paused) {
-        var message = "'" + username + "' paused at " + position;
+        message = "'" + username + "' paused at " + position;
         vid_player.pause();
         toastr.info(message);
     }
     if (doSeek == true) {
-        var message = "'" + username + "' seeked to " + position;
+        message = "'" + username + "' seeked to " + position;
         window.seekFromEvent = true;
         vid_player.currentTime = e.detail.position;
         toastr.warning(message);
+    }
+    if (message != null){
+        showChat(message);
     }
 });
 
@@ -183,6 +190,7 @@ vid_player.addEventListener("playlistindex", function (e) {
     let playlistElements = document.getElementsByClassName("playlist-entry");
     playlistElements[playlistIndex].id = "selected-entry";
     toastr.info(message);
+    showChat(message);
 });
 
 vid_player.addEventListener("playlistchanged", function (e) {
@@ -207,6 +215,7 @@ vid_player.addEventListener("playlistchanged", function (e) {
         playlistSidebar.appendChild(playlistElement);
     }
     toastr.info(message);
+    showChat(message);
 });
 
 vid_player.addEventListener("chatmessage", function (e) {
