@@ -3,6 +3,7 @@ const server = params.get("server") || "futaba.pls-step-on.me:9000";
 const room = params.get("room") || "master";
 const specialRooms = {
     "test": ["http://futaba.pls-step-on.me/media/Gura%20doesn't%20know%20I%20exist-RXoHkAfrxzA.mp4", "http://futaba.pls-step-on.me/media/pop-on-rocks-1h.mp4"],
+    "aobuta": ["http://futaba.pls-step-on.me/media/Dreaming%20Girl.mp4"],
     "bakemonogatari": []
 }
 for (let i = 1; i <= 15; i++) {
