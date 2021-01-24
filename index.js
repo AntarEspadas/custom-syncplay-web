@@ -27,7 +27,7 @@ vid_player.initialized = false;
 //     window.filename = $("#fpicker")[0].files[0].name;
 //     window.filesize = $("#fpicker")[0].files[0].size;
 // });
-let darkmode = Cookies.get("darkmode") !== "true";
+let colorTheme = "none";
 let username;
 let playlist = null;
 let playlistIndex;
@@ -40,12 +40,7 @@ const membersSidebar = document.getElementById("membersSidebar");
 usernameInput.value = Cookies.get("username") || (username = "Guest_" + Math.ceil(Math.random() * 1000));
 usernameInput.select();
 
-if (darkmode) {
-    darkmode = !darkmode;
-}
-else{
-    toggleDarkmode()
-}
+changeTheme(Cookies.get("theme") || "none");
 
 if (params.has("username")) {
     usernameInput.value = params.get("username");
@@ -292,19 +287,20 @@ document.getElementById("chat-input").addEventListener("keyup", function (e) {
 
 document.getElementById("chat-send").addEventListener("click", sendChat);
 
-document.getElementById("dark-mode-button").addEventListener("click", toggleDarkmode)
+document.getElementById("dark-mode-button").addEventListener("click", () => changeTheme(colorTheme == "none"? "dark" : "none"))
 
-function toggleDarkmode() {
+function changeTheme(userValue) {
     const head = $("head");
-    if (darkmode){
-        head[0].removeChild($("#dark-mode-stylesheet")[0]);
-        darkmode = false;
+    if (colorTheme != userValue){
+        if(userValue == "none"){
+            head[0].removeChild($("#dark-mode-stylesheet")[0]);
+        }
+        else{
+            head.append($(`<link id="dark-mode-stylesheet" rel="stylesheet" href="index-${userValue}.css">`));
+        }
+        colorTheme = userValue;
+        Cookies.set("theme", userValue, { sameSite: "Lax", expires: 3650 })
     }
-    else{
-        head.append($('<link id="dark-mode-stylesheet" rel="stylesheet" href="index-dark.css">'));
-        darkmode = true;
-    }
-    Cookies.set("darkmode", darkmode, { sameSite: "Lax", expires: 3650 })
 }
 
 function sendChat() {
